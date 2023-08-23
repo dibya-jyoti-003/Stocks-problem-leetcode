@@ -1,0 +1,26 @@
+#define vi vector<int>
+#define vvi vector<vi>
+class Solution {
+public:
+    int solve(int ind,vector<int> &arr,bool buy,int count,vector<vvi>& dp){
+        int n = arr.size();
+        if (ind == n)return 0;
+        if (count == 2)return 0;
+        if (dp[ind][buy][count] != -1)return dp[ind][buy][count];
+        int p1=0,p2=0;
+        if (buy){
+            p1 = solve(ind+1,arr,0,count,dp)-arr[ind];
+            p2 = solve(ind+1,arr,1,count,dp);
+        }
+        else {
+            p1 = solve(ind+1,arr,1,count+1,dp)+arr[ind];
+            p2 = solve(ind+1,arr,0,count,dp);
+        }
+        return dp[ind][buy][count] = max(p1,p2);
+    }
+    int maxProfit(vector<int>& prices) {
+        int n = prices.size();
+        vector<vvi> dp(n+1, vvi(2,vi(3,-1)));
+        return solve(0,prices,1,0,dp);
+    }
+};
