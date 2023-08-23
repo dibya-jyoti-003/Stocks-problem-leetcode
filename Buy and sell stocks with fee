@@ -1,0 +1,11 @@
+class Solution {
+public:
+    int maxProfit(vector<int>& arr,int fee) {
+        int c=0,d=0, n=arr.size();
+        for (int i=n-1;i>=0;i--){
+            c = max(c,d+arr[i]-fee);
+            d = max(d,c-arr[i]);
+        }
+        return d;
+    }
+};
